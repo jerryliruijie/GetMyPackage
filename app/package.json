@@ -1,0 +1,25 @@
+{
+  "name": "get-my-package-app",
+  "private": true,
+  "version": "1.0.0",
+  "homepage": "https://jerryliruijie.github.io/GetMyPackage/",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "check:version": "node scripts/check-version.mjs",
+    "build": "npm run check:version && tsc --noEmit && vite build",
+    "build:pages": "npm run check:version && tsc --noEmit && vite build --base=/GetMyPackage/",
+    "preview": "vite preview --host 127.0.0.1",
+    "serve:dist": "node scripts/serve-dist.mjs"
+  },
+  "dependencies": {
+    "vite": "^7.0.0",
+    "typescript": "^5.8.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
+  }
+}
