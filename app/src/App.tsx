@@ -3,7 +3,6 @@ import { calculateEvaluation } from './calculation';
 import { cityOptions, defaultEvaluation } from './defaults';
 import { loadEvaluation, saveEvaluation } from './storage';
 import type { EvaluationInput } from './types';
-import { APP_BUILD_DATE, APP_VERSION, DATA_SCHEMA_VERSION } from './version';
 
 type StepKey =
   | 'basic'
@@ -102,20 +101,23 @@ function Landing({ onStart }: { onStart: () => void }) {
     <section className="landing">
       <header className="landing-header">
         <Brand />
-        <span className="version-chip">v{APP_VERSION}</span>
+        <span className="brand-tagline">Offer 真实价值评估器</span>
       </header>
 
       <div className="hero">
         <div className="hero-copy">
+          <span className="eyebrow">一份机会，一本明白账</span>
           <h1>拆开 Offer，看见真实年包</h1>
           <p>
             把现金、股票、福利、通勤和工作成本放到同一张账本里，少一点猜测，多一点底气。
           </p>
           <div className="hero-actions">
             <button className="primary-button" type="button" onClick={onStart}>
-              开始估算
+              开始评估
             </button>
-            <span>数据只在本地浏览器保存</span>
+            <span className="privacy-note">
+              无需注册，数据只保存在当前浏览器
+            </span>
           </div>
         </div>
 
@@ -129,11 +131,20 @@ function Landing({ onStart }: { onStart: () => void }) {
         </div>
       </div>
 
-      <div className="landing-strip">
-        <span>本地优先</span>
-        <span>单份 Offer/当前工作估值</span>
-        <span>福利先抵扣成本</span>
-      </div>
+      <ul className="landing-highlights" aria-label="产品特点">
+        <li>
+          <strong>隐私留在本机</strong>
+          <span>无需账号，估值数据不会上传。</span>
+        </li>
+        <li>
+          <strong>从一份机会开始</strong>
+          <span>逐项填写收入、股权、福利与成本。</span>
+        </li>
+        <li>
+          <strong>每个数字有依据</strong>
+          <span>结果拆分展示，福利只抵扣实际成本。</span>
+        </li>
+      </ul>
     </section>
   );
 }
@@ -167,24 +178,25 @@ function Wizard({
   return (
     <section className="wizard">
       <header className="wizard-header">
-        <button className="ghost-button" type="button" onClick={onBack}>
+        <Brand />
+        <button
+          className="ghost-button compact-button"
+          type="button"
+          onClick={onBack}
+        >
           返回首页
         </button>
-        <Brand />
-        <div className="version-stack">
-          <span>v{APP_VERSION}</span>
-          <small>{DATA_SCHEMA_VERSION}</small>
-        </div>
       </header>
 
       <div className="wizard-layout">
         <section className="form-panel">
           <div className="form-heading">
             <div>
+              <span className="section-kicker">逐项填写</span>
               <h2>估算这一份机会</h2>
-              <p>先用简化模型跑通口径，后续可以继续细化税务和城市规则。</p>
+              <p>按现金收入、股权、福利与工作成本逐项填写，结果会实时更新。</p>
             </div>
-            <span>自动本地保存</span>
+            <span className="save-status">仅保存在当前浏览器</span>
           </div>
 
           <nav className="steps" aria-label="估算步骤">
@@ -227,7 +239,6 @@ function Wizard({
       </div>
 
       <footer className="app-footer">
-        <span>Build {APP_BUILD_DATE}</span>
         <span>计算结果仅用于个人决策参考，不构成税务、投资或法律建议。</span>
       </footer>
     </section>
@@ -449,9 +460,9 @@ function ResultPanel({
   return (
     <aside className="result-panel">
       <div className="result-top">
-        <span>{input.city}</span>
+        <span>{input.city} · 真实年包估算</span>
         <h2>{formatWan(result.realPackage)}</h2>
-        <p>{input.title} 的真实年包估算</p>
+        <p>{input.title}</p>
       </div>
 
       <div className="result-list">
@@ -463,7 +474,7 @@ function ResultPanel({
       </div>
 
       <div className="formula-note">
-        <strong>当前口径</strong>
+        <strong>计算方式</strong>
         <p>
           真实年包 = 税后现金估算 + 风险后股权 - 工作成本净扣减。
           福利优先抵扣成本，不直接当作额外收入。
