@@ -121,7 +121,7 @@ function Landing({ onStart }: { onStart: () => void }) {
 
         <div className="hero-visual" aria-hidden="true">
           <img
-            src="/assets/hero-ledger-v1.0.0.png"
+            src="./assets/hero-ledger-v1.0.0.png"
             alt=""
             width="1586"
             height="992"
